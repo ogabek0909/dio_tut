@@ -13,14 +13,21 @@ class HomeScreen extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           var options = BaseOptions(
-            headers: {"X-Api-Key": "bcb76b7573c14bb283db3cf63089b5f2"},
-            baseUrl: 'https://randommer.io/',
+            baseUrl: 'https://reqres.i/2',
             connectTimeout: const Duration(seconds: 5),
             receiveTimeout: const Duration(seconds: 3),
           );
           var dio = Dio(options);
-          Response response = await dio.get('api/Card');
-          print(response.data);
+          try {
+            Response response = await dio.get('api/users/');
+            print(response.data);
+          } on DioException catch (error) {
+            if (error.response != null) {
+              print('something');
+            } else {
+              print('nimadur');
+            }
+          }
         },
       ),
     );
